@@ -1,14 +1,30 @@
 let novels = [];
 
 async function init() {
-  const res = await fetch('./novels.json');
-  novels = await res.json();
+  try {
+    const res = await fetch('./novels.json');
 
-  renderHome();
+    if (!res.ok) {
+      throw new Error("JSON加载失败");
+    }
+
+    novels = await res.json();
+
+    renderHome();
+  } catch (err) {
+    console.error(err);
+    document.getElementById("novel-list").innerHTML =
+      "<p style='color:red'>数据加载失败，请检查 novels.json</p>";
+  }
 }
 
 function renderHome() {
   const container = document.getElementById("novel-list");
+
+  if (!novels || novels.length === 0) {
+    container.innerHTML = "<p>暂无小说</p>";
+    return;
+  }
 
   let html = "<h2>小说列表</h2><ul>";
 
@@ -27,4 +43,4 @@ function renderHome() {
   container.innerHTML = html;
 }
 
-init(); // ✅ 统一入口
+init();
