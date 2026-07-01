@@ -3,26 +3,50 @@ let novels = [];
 async function init() {
   try {
     const res = await fetch('./novels.json');
-    if (!res.ok) throw new Error("JSON加载失败");
-    novels = await res.json();
+    if (!res.ok) throw new Error(`HTTP ${res.status}: JSON加载失败`);
 
-    // 根据当前页面决定渲染什么
-    if (window.location.pathname.includes('novel.html')) {
+    novels = await res.json();
+    console.log('成功加载小说数量:', novels.length);  // 调试用
+
+    // 根据页面决定渲染
+    if (window.location.pathname.endsWith('novel.html') || 
+        window.location.search.includes('id=')) {
       renderNovelDetail();
     } else {
       renderHome();
     }
   } catch (e) {
-    console.error(e);
-    const el = document.getElementById("novel-list") || document.getElementById("novel-detail");
-    if (el) el.innerHTML = "<p style='color:red'>数据加载失败</p>";
+    console.error('加载失败:', e);
+    const listEl = document.getElementById("novel-list");
+    if (listEl) {
+      listEl.innerHTML = `<p style='color:red'>novels.json 加载失败: ${e.message}</p>`;
+    }
   }
 }
 
 function renderHome() {
   const el = document.getElementById("novel-list");
-  if (!el) return;
-  // ... 保持你原来的 renderHome 代码 ...
+  if (!el) {
+    console.error('未找到 #novel-list 元素');
+    return;
+  }
+
+  if (!novels || novels.length === 0) {
+    el.innerHTML = "<p>暂无数据</p>";
+    return;
+  }
+
+  el.innerHTML = `
+    <h2>小说列表</h2>
+    <ul>
+      ${novels.map(n => `
+        <li>
+          <a href="novel.html?id=${encodeURIComponent(n.id)}">${n.title}</a>
+          <p>${n.category} | ${n.desc.substring(0, 100)}...</p>
+        </li>
+      `).join('')}
+    </ul>
+  `;
 }
 
 function renderNovelDetail() {
@@ -30,18 +54,19 @@ function renderNovelDetail() {
   if (!el) return;
 
   const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
+  let id = params.get('id');
 
   if (!id) {
     el.innerHTML = "<p>缺少小说ID参数</p>";
     return;
   }
 
-  // 注意：你 novles.json 里的 id 是带书名的长字符串，要注意匹配方式
-  const novel = novels.find(n => n.id === id || n.title.includes(id));
+  // 解码并查找（你的id里有很多特殊字符）
+  id = decodeURIComponent(id);
+  const novel = novels.find(n => n.id === id || n.title === id || n.title.includes(id));
 
   if (!novel) {
-    el.innerHTML = "<p>未找到该小说</p>";
+    el.innerHTML = `<p>未找到小说: ${id}</p>`;
     return;
   }
 
@@ -51,7 +76,6 @@ function renderNovelDetail() {
     <p><strong>简介：</strong>${novel.desc}</p>
     <hr>
     <a href="index.html">← 返回首页</a>
-    <!-- 如果以后要显示正文，可以在这里加 -->
   `;
 }
 
