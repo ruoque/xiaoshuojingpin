@@ -55,13 +55,11 @@ function renderNovelDetail() {
 
   const params = new URLSearchParams(window.location.search);
   let id = params.get('id');
-
   if (!id) {
     el.innerHTML = "<p>缺少小说ID参数</p>";
     return;
   }
 
-  // 解码并查找（你的id里有很多特殊字符）
   id = decodeURIComponent(id);
   const novel = novels.find(n => n.id === id || n.title === id || n.title.includes(id));
 
@@ -69,28 +67,10 @@ function renderNovelDetail() {
     el.innerHTML = `<p>未找到小说: ${id}</p>`;
     return;
   }
-
   
   // 生成下载链接（直接指向 txt 文件夹里的文件）
   
- function renderNovelDetail() {
-  const el = document.getElementById("novel-detail");
-  if (!el) return;
 
-  const params = new URLSearchParams(window.location.search);
-  let id = params.get('id');
-  if (!id) {
-    el.innerHTML = "<p>缺少小说ID参数</p>";
-    return;
-  }
-
-  id = decodeURIComponent(id);
-  const novel = novels.find(n => n.id === id || n.title === id || n.title.includes(id));
-
-  if (!novel) {
-    el.innerHTML = `<p>未找到小说: ${id}</p>`;
-    return;
-  }
 
   const downloadUrl = novel.file;
   const imageUrl = novel.image || 'pic/default.jpg';   // 如果没设图片就用默认图
