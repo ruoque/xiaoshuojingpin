@@ -69,27 +69,56 @@ function renderNovelDetail() {
     el.innerHTML = `<p>未找到小说: ${id}</p>`;
     return;
   }
+
+  
   // 生成下载链接（直接指向 txt 文件夹里的文件）
-  const downloadUrl = novel.file;   // 如 "txt/书名.txt"
+  
+ function renderNovelDetail() {
+  const el = document.getElementById("novel-detail");
+  if (!el) return;
+
+  const params = new URLSearchParams(window.location.search);
+  let id = params.get('id');
+  if (!id) {
+    el.innerHTML = "<p>缺少小说ID参数</p>";
+    return;
+  }
+
+  id = decodeURIComponent(id);
+  const novel = novels.find(n => n.id === id || n.title === id || n.title.includes(id));
+
+  if (!novel) {
+    el.innerHTML = `<p>未找到小说: ${id}</p>`;
+    return;
+  }
+
+  const downloadUrl = novel.file;
+  const imageUrl = novel.image || 'pic/default.jpg';   // 如果没设图片就用默认图
 
   el.innerHTML = `
     <h1>${novel.title}</h1>
     <p><strong>分类：</strong>${novel.category}</p>
     <p><strong>简介：</strong>${novel.desc}</p>
     
-    <div style="margin: 30px 0;">
+    <div style="margin: 25px 0;">
       <a href="${downloadUrl}" 
          download 
          class="download-btn"
-         style="display: inline-block; padding: 12px 24px; background: #0066cc; color: white; text-decoration: none; border-radius: 6px; font-size: 16px;">
+         style="display: inline-block; padding: 12px 28px; background: #0066cc; color: white; text-decoration: none; border-radius: 6px; font-size: 16px;">
         📥 下载 TXT 小说全文
       </a>
+    </div>
+
+    <!-- 新增：显示图片 -->
+    <div style="margin: 20px 0;">
+      <img src="${imageUrl}" 
+           alt="${novel.title}" 
+           style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
     </div>
 
     <hr>
     <a href="index.html">← 返回首页</a>
   `;
-
 }
 
 // 启动
