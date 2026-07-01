@@ -90,15 +90,6 @@ function renderNovelDetail() {
     <a href="index.html">← 返回首页</a>
   `;
 
-
-  
-  el.innerHTML = `
-    <h1>${novel.title}</h1>
-    <p><strong>分类：</strong>${novel.category}</p>
-    <p><strong>简介：</strong>${novel.desc}</p>
-    <hr>
-    <a href="index.html">← 返回首页</a>
-  `;
 }
 
 // 启动
