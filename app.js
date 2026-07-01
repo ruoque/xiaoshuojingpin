@@ -69,7 +69,29 @@ function renderNovelDetail() {
     el.innerHTML = `<p>未找到小说: ${id}</p>`;
     return;
   }
+  // 生成下载链接（直接指向 txt 文件夹里的文件）
+  const downloadUrl = novel.file;   // 如 "txt/书名.txt"
 
+  el.innerHTML = `
+    <h1>${novel.title}</h1>
+    <p><strong>分类：</strong>${novel.category}</p>
+    <p><strong>简介：</strong>${novel.desc}</p>
+    
+    <div style="margin: 30px 0;">
+      <a href="${downloadUrl}" 
+         download 
+         class="download-btn"
+         style="display: inline-block; padding: 12px 24px; background: #0066cc; color: white; text-decoration: none; border-radius: 6px; font-size: 16px;">
+        📥 下载 TXT 小说全文
+      </a>
+    </div>
+
+    <hr>
+    <a href="index.html">← 返回首页</a>
+  `;
+
+
+  
   el.innerHTML = `
     <h1>${novel.title}</h1>
     <p><strong>分类：</strong>${novel.category}</p>
