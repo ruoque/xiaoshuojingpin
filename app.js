@@ -1,14 +1,37 @@
 let novels = [];
 
-fetch('novels.json')
-  .then(res => res.json())
-  .then(data => {
-    novels = data;
-  });
+async function init() {
+  try {
+    const res = await fetch('./novels.json');
 
-// 首页渲染
+    if (!res.ok) {
+      throw new Error("JSON加载失败");
+    }
+    if (!res.ok) throw new Error("JSON加载失败");
+
+    novels = await res.json();
+
+    renderHome();
+  } catch (err) {
+    console.error(err);
+  } catch (e) {
+    console.error(e);
+    document.getElementById("novel-list").innerHTML =
+      "<p style='color:red'>数据加载失败，请检查 novels.json</p>";
+      "<p style='color:red'>novels.json 加载失败</p>";
+  }
+}
+
 function renderHome() {
   const container = document.getElementById("novel-list");
+  const el = document.getElementById("novel-list");
+
+  if (!novels || novels.length === 0) {
+    container.innerHTML = "<p>暂无小说</p>";
+  if (!novels.length) {
+    el.innerHTML = "<p>暂无数据</p>";
+    return;
+  }
 
   let html = "<h2>小说列表</h2><ul>";
 
@@ -25,47 +48,13 @@ function renderHome() {
 
   html += "</ul>";
   container.innerHTML = html;
-}
-
-// 1. 确保 DOM 加载完成后再执行逻辑
-document.addEventListener('DOMContentLoaded', () => {
-    // 2. 检查当前页面是否包含目标挂载点，防止在 index.html 报错
-    const detailContainer = document.getElementById('novel-detail');
-    
-    if (detailContainer) {
-        // 3. 执行渲染逻辑
-        // 确保你的 renderNovelPage 函数在这里被调用
-        if (typeof renderNovelPage === 'function') {
-            renderNovelPage();
-        } else {
-            console.error("renderNovelPage 函数未在 app.js 中定义");
-        }
-    }
-});
-
-
-// 小说详情页渲染
-function renderNovelPage() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
-
-  const novel = novels.find(n => n.id === id);
-
-  const container = document.getElementById("novel-detail");
-
-  if (!novel) {
-    container.innerHTML = "<h2>小说不存在</h2>";
-    return;
-  }
-
-  container.innerHTML = `
-    <h1>${novel.title}</h1>
-    <p>${novel.desc}</p>
-
-    <h3>下载 TXT</h3>
-    <a href="${novel.file}" download>点击下载</a>
-
-    <br><br>
-    <a href="index.html">返回首页</a>
-  `;
+  el.innerHTML =
+    "<h2>小说列表</h2><ul>" +
+    novels.map(n =>
+      `<li>
+        <a href="novel.html?id=${n.id}">${n.title}</a>
+        <p>${n.category} | ${n.desc}</p>
+      </li>`
+    ).join("") +
+    "</ul>";
 }
