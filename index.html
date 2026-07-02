@@ -7,22 +7,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    Welcome to my private space.
-    This is my web home.
+    <p>Welcome to my private space. This is my web home.</p>
 
     <nav class="theme-switcher">
-    <button onclick="setTheme('blue')">马卡龙蓝</button>
-    <button onclick="setTheme('red')">樱花粉</button>
-    <button onclick="setTheme('green')">薄荷绿</button>
-    <button onclick="setTheme('dark')">深邃黑</button>
-</nav>
+        <button onclick="setTheme('blue')">马卡龙蓝</button>
+        <button onclick="setTheme('red')">樱花粉</button>
+        <button onclick="setTheme('green')">薄荷绿</button>
+        <button onclick="setTheme('dark')">深邃黑</button>
+    </nav> <h1>精品小说介绍</h1>
 
-    <h1>精品小说介绍</h1>
-
-    <div id="novel-list"></div>
-
-    <script src="app.js"></script>
+    <div id="novel-list"></div> <script src="app.js"></script>
     <script>
+        // 如果这里报错，前面的代码一定有标签没闭合
         renderHome();
     </script>
 </body>
