@@ -93,7 +93,16 @@ function renderNovelDetail() {
 
   const downloadUrl = novel.file;
   const imageUrl = novel.image || 'pic/default.jpg';   // 如果没设图片就用默认图
+    
+    <!-- 新增：显示图片 -->
+    <div style="margin: 20px 0;">
+      <img src="${imageUrl}" 
+           alt="${novel.title}" 
+           style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    </div>
 
+
+    
   el.innerHTML = `
     <h1>${novel.title}</h1>
     <p><strong>分类：</strong>${novel.category}</p>
@@ -108,12 +117,7 @@ function renderNovelDetail() {
       </a>
     </div>
     
-    <!-- 新增：显示图片 -->
-    <div style="margin: 20px 0;">
-      <img src="${imageUrl}" 
-           alt="${novel.title}" 
-           style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-    </div>
+
 
     <hr>
     <a href="index.html">← 返回首页</a>
