@@ -1,18 +1,15 @@
 
-// 主题切换函数
+// 1. 全局配置与状态
+const savedTheme = localStorage.getItem('user-theme') || 'blue';
+document.documentElement.setAttribute('data-theme', savedTheme);
+
 function setTheme(themeName) {
     document.documentElement.setAttribute('data-theme', themeName);
-    localStorage.setItem('user-theme', themeName); // 保存到本地
+    localStorage.setItem('user-theme', themeName);
 }
 
-// 页面初始化：读取用户上次的选择
-(function initTheme() {
-    const savedTheme = localStorage.getItem('user-theme') || 'blue'; // 默认马卡龙蓝
-    setTheme(savedTheme);
-})();
 
-
-
+// 2. 数据源
 let novels = [];
 
 async function init() {
@@ -123,4 +120,4 @@ function renderNovelDetail() {
 }
 
 // 启动
-init();
+document.addEventListener('DOMContentLoaded', init);
