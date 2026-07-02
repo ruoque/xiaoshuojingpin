@@ -112,7 +112,7 @@ function renderNovelDetail() {
     <p><strong>分类：</strong>${novel.category}</p>
     <p><strong>简介：</strong>${novel.desc}</p>
     
-    <div style="margin: 25px 0;">
+    <div style="margin: 25px 0; display: flex; justify-content: flex-end;">
       <a href="${downloadUrl}" 
          download 
          class="download-btn"
