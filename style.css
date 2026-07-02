@@ -1,16 +1,68 @@
+/* --- 1. 现代画布定义 (进阶版 body) --- */
 body {
-  font-family: Arial;
-  max-width: 800px;
-  margin: 40px auto;
+    /* 替换 Arial，使用原生系统字体栈，获得最佳跨平台渲染效果 */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
+    /* 使用相对单位 (ch)，符合最佳阅读视角的心理物理学研究 */
+    max-width: 68ch;
+
+    /* 增加上下边距，赋予内容更多“呼吸”空间 */
+    margin: 80px auto;
+
+    /* 优化基础排版，行高决定了内容的可读性节奏 */
+    line-height: 1.8;
+
+    /* 使用极浅的背景色代替纯白，减少屏幕蓝光刺激，提升视觉舒适度 */
+    background-color: #f9f9f9;
+
+    /* 确保长内容在移动端也能拥有内边距，防止贴边 */
+    padding: 0 20px;
+
+    /* 优化字体抗锯齿 */
+    -webkit-font-smoothing: antialiased;
 }
 
+/* --- 2. 布局重置 (Reset) --- */
 ul {
-  padding: 0;
+    /* 清除默认样式，这是基础操作 */
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
+/* --- 3. 认知卡片设计 (进阶版 li) --- */
 li {
-  list-style: none;
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
+    /* 取消会导致视觉拥挤的 border */
+    border: none;
+
+    /* 引入深度：使用极淡的背景色，利用邻近性原则划分区域 */
+    background-color: #ffffff;
+
+    /* 增加内边距，减少密度感 */
+    padding: 40px;
+
+    /* 使用圆角代替直角，符合视觉心理学中的“软化”感知 */
+    border-radius: 16px;
+
+    /* 关键魔法：引入细微的 box-shadow，使元素从平面“浮起”，建立层次感 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    /* 增加元素间距，构建清晰的阅读节奏 */
+    margin-bottom: 40px;
+
+    /* 启用 GPU 加速，为平滑过渡做准备 */
+    transform: translateZ(0);
+
+    /* --- 4. 交互引导 (Hover 动效) --- */
+    /* 添加过渡效果，使用缓动函数 (Ease-Out) 模拟物理世界的惯性 */
+    transition: box-shadow 0.3s ease-out, transform 0.3s ease-out;
+    cursor: pointer;
+}
+
+/* 鼠标悬停时的视觉反馈：悬浮感增强，引导用户交互 */
+li:hover {
+    /* 抬升卡片 */
+    transform: translateY(-5px);
+    /* 加深、柔化阴影，模拟更接近的光照环境 */
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.06), 0 4px 6px rgba(0, 0, 0, 0.08);
 }
