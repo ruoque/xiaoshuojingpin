@@ -94,6 +94,12 @@ function renderNovelDetail() {
   const downloadUrl = novel.file;
   const imageUrl = novel.image || 'pic/default.jpg';   // 如果没设图片就用默认图
     
+
+
+
+    
+  el.innerHTML = `
+    <h1>${novel.title}</h1>
     <!-- 新增：显示图片 -->
     <div style="margin: 20px 0;">
       <img src="${imageUrl}" 
@@ -103,8 +109,6 @@ function renderNovelDetail() {
 
 
     
-  el.innerHTML = `
-    <h1>${novel.title}</h1>
     <p><strong>分类：</strong>${novel.category}</p>
     <p><strong>简介：</strong>${novel.desc}</p>
     
