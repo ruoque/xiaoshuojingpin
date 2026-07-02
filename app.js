@@ -87,16 +87,12 @@ function renderNovelDetail() {
 
 
   
-  // 生成下载链接（直接指向 txt 文件夹里的文件）
-  
-
+  // 以下为详情页的设置
 
   const downloadUrl = novel.file;
   const imageUrl = novel.image || 'pic/default.jpg';   // 如果没设图片就用默认图
     
-
-
-
+//图片的引用
     
   el.innerHTML = `
     <h1>${novel.title}</h1>
@@ -107,10 +103,12 @@ function renderNovelDetail() {
            style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
     </div>
 
-
+//分类和简介的内容
     
     <p><strong>分类：</strong>${novel.category}</p>
     <p><strong>简介：</strong>${novel.desc}</p>
+
+// 下载按钮
     
     <div style="margin: 25px 0; display: flex; justify-content: flex-end;">
       <a href="${downloadUrl}" 
@@ -121,7 +119,7 @@ function renderNovelDetail() {
       </a>
     </div>
     
-
+// 返回首页链接
 
     <hr>
     <a href="index.html">← 返回首页</a>
